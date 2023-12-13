@@ -2,7 +2,10 @@ import * as React from "react";
 import { NextPage } from "next";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
+import { ActionButton } from "../../components/ActionButton";
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
+import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
 
 const Home: NextPage = () => {
 
@@ -16,14 +19,9 @@ const Home: NextPage = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleClick}
-                sx={{ width: "50%", height: "4rem", fontSize: "1.2rem" }}
-              >
-                Some other Button
-              </Button>
+              <ActionButton href="#" text="Knowledge Base" Icon={LibraryBooksOutlinedIcon} />
+              <ActionButton href="/tickets" text="Tickets" Icon={SupportAgentIcon} />
+              <ActionButton href="#" text="FAQ Insights" Icon={LightbulbOutlinedIcon} />
             </Box>
           </Grid>
         </Grid>

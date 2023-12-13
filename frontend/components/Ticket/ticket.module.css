@@ -1,0 +1,14 @@
+.listItem {
+    width: 50vw;
+}
+.btnContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.btnContainer button  {
+    flex: 1;
+    font-weight: bold;
+}

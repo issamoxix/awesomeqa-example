@@ -1,0 +1,28 @@
+.ActionButton {
+    background-color: rgb(28 28 31);
+    color: white;
+    padding: 15px;
+    text-transform: none;
+    width: 30%;
+    margin: 10px;
+}
+
+.ActionButton:hover {
+    background-color: transparent;
+}
+
+.Stack {
+    display: flex;
+    width: 100%;
+    font-size: 24px;
+    align-items: flex-start;
+    border-radius: 8px;
+}
+
+.Icon {
+    width: 50px;
+    height: 50px;
+    background-color: #5D50C34D;
+    border-radius: 8px;
+    padding: 7px;
+}

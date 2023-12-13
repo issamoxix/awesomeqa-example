@@ -9,3 +9,7 @@ class TicketRepository:
 
     def get_tickets(self, limit: Optional[int] = None) -> list[dict]:
         return self.data["tickets"][:limit]
+
+    def get_messages(self) ->  dict:
+        messages = self.data["messages"]
+        return {message.get("id"):message for message in messages}
