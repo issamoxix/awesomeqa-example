@@ -5,7 +5,6 @@ from fastapi import Depends, FastAPI
 from fastapi.responses import JSONResponse
 
 
-
 def add_cors_middleware(application: FastAPI):
     allowed_origins = [
         "http://localhost",
@@ -26,10 +25,6 @@ add_cors_middleware(app)
 
 TICKET_FILEPATH = "../data/awesome_tickets.json"
 ticket_repository = TicketRepository(filepath=TICKET_FILEPATH)
-messages = ticket_repository.get_messages()
-tickets = ticket_repository.get_tickets()
-
-resolved_tickets = [] # Done Tickets
 
 
 @app.get("/healthz")
@@ -42,6 +37,8 @@ async def get_tickets(
     limit: int = 20,
 ):
     msgs = {}
+    tickets = ticket_repository.tickets[:limit]
+    messages = ticket_repository.messages
 
     for ticket in tickets[:limit]:
         msg_id = ticket.get("msg_id")
@@ -55,24 +52,35 @@ async def get_tickets(
 @app.get("/messages")
 async def get_messages(msgs: str):
     response = []
+    messages = ticket_repository.messages
     all_messages = msgs.split(",")
     for msg in all_messages:
         response.append(messages.get(msg))
-    return JSONResponse({"data": response, "msg": None}, status_code=200)
+    return JSONResponse({"data": response, "msg": None, "succ": True}, status_code=200)
 
 
 @app.delete("/ticket/{ticketId}/delete")
 async def delete_ticket(ticketId: int):
-    tickets.pop(ticketId)
-    return JSONResponse({"data": ticketId, "msg": "Ticket Deleted"}, status_code=200)
+    if not ticket_repository.delete_ticket(ticket_id=ticketId):
+        return JSONResponse(
+            {"data": [], "msg": "Coundl't Delete the Ticket", "succ": False}, status_code=200
+        )
+
+    return JSONResponse(
+        {"data": [], "msg": "Ticket Deleted", "succ": True}, status_code=200
+    )
 
 
 @app.post("/ticket/{ticketId}/done")
 async def resolve_ticket(ticketId: int):
-    resolved_tickets.append(tickets[ticketId])
-    tickets.pop(ticketId)
+    if not ticket_repository.resolve_ticket(ticket_id=ticketId):
+        return JSONResponse(
+            {"data": ticketId, "msg": "Coundl't Resovle the Ticket", "succ": False},
+            status_code=200,
+        )
     return JSONResponse(
-        {"data": ticketId, "msg": "Ticket Has been Resolved ! "}, status_code=200
+        {"data": ticketId, "msg": "Ticket Has been Resolved ! ", "succ": True},
+        status_code=200,
     )
 
 

@@ -16,7 +16,7 @@ const Home: NextPage = () => {
     const [messages, setMessages] = React.useState<MessageType>()
     const updateCount = useSelector((state: any) => state.updateCount)
     const fetchTickets = async () => {
-        const url = "http://localhost:5001/tickets?limit=5"
+        const url = "http://localhost:5001/tickets?limit=10"
         const response = await fetch(url)
         const json = await response.json()
         return json
